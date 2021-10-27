@@ -1,10 +1,10 @@
-from Domain.obiect import  get_new_object
+from Domain.obiect2 import  get_new_object
 from Logic.crud import create, read, update, delete
 
 
 def showmenu():
     print('1.Citirea unei liste noi')
-    print('2.Adaugarea de elemente in lista')
+    print('2.Adaugarea de obiecte in lista')
     print('3.Citirea unui obiect cu id-ul dat de la tastatura')
     print('4.Modificarea unui obiect din lista, care are acelasi id cu un nou obiect dat de la tastatura')
     print('5.Stergerea unui obiect cu id-ul dat de la tastatura')
@@ -21,22 +21,22 @@ def header():
             lista = []
             numar = int(input('Dati numarul de obiecte ale listei: '))
             for pozitie in range(numar):
-                id1 = int(input(f'Dati id-ul obiectului {pozitie}: '))
-                nume = input(f'Dati numele obiectului {pozitie}: ')
-                descriere = input(f'Dati descrierea obiectului {pozitie}: ')
-                pret_achizitie = int(input(f'Dati pretul achizitiei obiectului {pozitie}: '))
-                locatie = input(f'Dati locatia (formata din 4 caractere) obiectului {pozitie}: ')
+                id1 = int(input(f'Dati id-ul obiectului de pe pozitia {pozitie}: '))
+                nume = input(f'Dati numele obiectului e pe pozitia {pozitie}: ')
+                descriere = input(f'Dati descrierea obiectului e pe pozitia {pozitie}: ')
+                pret_achizitie = int(input(f'Dati pretul achizitiei obiectului e pe pozitia {pozitie}: '))
+                locatie = input(f'Dati locatia (formata din 4 caractere) obiectului e pe pozitia {pozitie}: ')
                 lista = create(lista, id1, nume, descriere, pret_achizitie, locatie)
             print(lista)
 
         elif obtiune == '2':
             numar = int(input('Dati numarul de obiecte pe care doriti sa le adaugati: '))
             for pozitie in range(numar):
-                id2 = int(input(f'Dati id-ul obiectului {pozitie}: '))
-                nume = input(f'Dati numele obiectului {pozitie}: ')
-                descriere = input(f'Dati descrierea obiectului {pozitie}: ')
-                pret_achizitie = int(input(f'Dati pretul achizitiei obiectului {pozitie}: '))
-                locatie = input(f'Dati locatia (formata din 4 caractere) obiectului {pozitie}: ')
+                id2 = int(input(f'Dati id-ul obiectului de adaugat {pozitie + 1} care va fi pe pozitia {pozitie + len(lista)} in sir: '))
+                nume = input(f'Dati numele obiectului de adaugat {pozitie + 1} care va fi pe pozitia {pozitie + len(lista)} in sir: ')
+                descriere = input(f'Dati descrierea obiectului de adaugat {pozitie + 1} care va fi pe pozitia {pozitie + len(lista)} in sir: ')
+                pret_achizitie = int(input(f'Dati pretul achizitiei obiectului de adaugat {pozitie + 1} care va fi pe pozitia {pozitie + len(lista)} in sir: '))
+                locatie = input(f'Dati locatia (formata din 4 caractere) obiectului {pozitie + 1} care va fi pe pozitia {pozitie + len(lista)} in sir: ')
                 lista = create(lista, id2, nume, descriere, pret_achizitie, locatie)
             print (lista)
 

@@ -1,4 +1,4 @@
-from Domain.obiect import get_new_object, get_id
+from Domain.obiect2 import get_new_object, get_id
 
 
 def create(lista_obiecte: list, _id: int, _nume: str, _descriere: str, _pret_achizitie: int, _locatie: str):
