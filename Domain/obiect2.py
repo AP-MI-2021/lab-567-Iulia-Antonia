@@ -26,6 +26,3 @@ def get_locatie(obiect):
 def get_object_string(obiect):
     return f'Obiect cu ID-ul {get_id(obiect)}, cu numele {get_nume(obiect)}, decrierea {get_descriere(obiect)}, ' \
            f'pretul achizitiei {get_pret_achizitie(obiect)} si locatia {get_locatie(obiect)}'
-
-
-print(get_new_object(1, 'hg', 'desc1', 2, 'sdfvf'))

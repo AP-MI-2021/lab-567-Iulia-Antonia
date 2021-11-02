@@ -23,7 +23,7 @@ def get_descriere(obiect):
 
 
 def get_pret_achizitie(obiect):
-    return obiect['pret-achizite']
+    return obiect['pret_achizite']
 
 
 def get_locatie(obiect):
