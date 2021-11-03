@@ -10,6 +10,7 @@ def concatenare_string(element1: str, element2: str):
     """
     return element1 + element2
 
+
 def concatenare(lista: list, string_citit: str, pret: int):
     """
     Concateneaza un string citit la descrierea obiectelor din lista care au un pret mai mare decat unul dat

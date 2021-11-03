@@ -3,7 +3,8 @@ from Logic.crud import create, delete
 from Tests.test_concatenare import test_concatenare
 from Tests.test_crud import test_crud
 from Tests.test_change_location import test_change_location
-from User_interface.console import header, handle_delete
+from User_interface.console import header
+from User_interface.console2 import header2
 
 
 def main():
@@ -23,8 +24,38 @@ def main():
     lista = header(lista)
 
 
+def main2():
+    lista = []
+    obiect1 = get_new_object(1, 'birou', 'desc 1', 450, 'l111')
+    lista = create(lista, obiect1)
+    obiect2 = get_new_object(2, 'scaun', 'desc 2', 100, 'l111')
+    lista = create(lista, obiect2)
+    obiect3 = get_new_object(3, 'masa', 'desc 3', 330, 'l121')
+    lista = create(lista, obiect3)
+    obiect4 = get_new_object(4, 'frigider', 'desc 4', 2900, 'l112')
+    lista = create(lista, obiect4)
+    obiect5 = get_new_object(5, 'cafetiera', 'desc 5', 470, 'l112')
+    lista = create(lista, obiect5)
+    obiect6 = get_new_object(6, 'imprimanta', 'desc 6', 890, 'l111')
+    lista = create(lista, obiect6)
+    lista = header2(lista)
+
+
+def obtiuni():
+    print('Alege cum vrei sa dai comenzile: ')
+    print('1 - daca vrei sa dai pe rand comenzile')
+    print('2 - daca vrei sa dai toate comenzile o data')
+
+
 if __name__ == '__main__':
     test_crud()
     test_change_location()
     test_concatenare()
-    main()
+    obtiuni()
+    obtiune = input('Alege cum vrei sa dai comenzile: ')
+    if obtiune == '2':
+        main2()
+    elif obtiune == '1':
+        main()
+    else:
+        print('Poti alece doar 1 sau 2!')
