@@ -25,8 +25,8 @@ def test_create():
         assert False
     except ValueError:
         assert True
-    new_object3 = get_new_object(7, 'dulap7', 'desc 77', 90, 'l11')
     try:
+        new_object3 = get_new_object(7, 'dulap7', 'desc 77', 90, 'l11')
         _ = create(new_list, new_object3)
         assert False
     except ValueError:

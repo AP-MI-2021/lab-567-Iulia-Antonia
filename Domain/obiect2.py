@@ -1,5 +1,13 @@
 def get_new_object(_id: int, _nume: str, _descriere: str, _pret_achizitie: int, _locatie: str):
-    obiect = [_id, _nume, _descriere, _pret_achizitie, _locatie.zfill(4)]
+    if type(_id) is not int:
+        raise ValueError('ID-ul trebuie sa fie un numar intreg!')
+    if type(_pret_achizitie) is not int:
+        raise ValueError('Pretul achizitiei trebuie sa fie un numar intreg!')
+    if len(_locatie) != 4:
+        raise ValueError('Locatia trebuie sa aiba exact 4 caractere!')
+    if _pret_achizitie < 0:
+        raise ValueError('Pretul achizitiei trebuie sa fie un numar intreg, pozitiv!')
+    obiect = [_id, _nume, _descriere, _pret_achizitie, _locatie]
     return obiect
 
 

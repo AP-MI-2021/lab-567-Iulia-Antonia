@@ -1,4 +1,4 @@
-from Domain.obiect2 import get_id, get_locatie
+from Domain.obiect2 import get_id, get_locatie, get_pret_achizitie
 
 
 def create(lista_obiecte: list, obiect: list):
@@ -9,8 +9,12 @@ def create(lista_obiecte: list, obiect: list):
     :return: - lista_obiecte in care a adaugat obiectul obiect
              - eroarea si motivul ei
     """
+    if type(get_id(obiect)) is not int:
+        raise ValueError('ID-ul trebuie sa fie un numar intreg!')
     if len(get_locatie(obiect)) != 4:
         raise ValueError('Locatia trebuie sa fie formata din exact 4 caractere')
+    if get_pret_achizitie(obiect) < 0:
+        raise ValueError('Pretul achizitiei trebuie sa fie un numar intreg, pozitiv!')
     for element in lista_obiecte:
         if get_id(element) == get_id(obiect):
             raise ValueError(f'Elementul cu id-ul {get_id(obiect)} exista deja in lista')

@@ -53,9 +53,10 @@ if __name__ == '__main__':
     test_concatenare()
     obtiuni()
     obtiune = input('Alege cum vrei sa dai comenzile: ')
+
     if obtiune == '2':
         main2()
     elif obtiune == '1':
         main()
     else:
-        print('Poti alece doar 1 sau 2!')
+        print('Poti alege doar 1 sau 2!')

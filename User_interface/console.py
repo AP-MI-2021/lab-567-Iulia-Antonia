@@ -2,6 +2,25 @@ from Domain.obiect2 import  get_new_object
 from Logic.change_location import change_location
 from Logic.concatenare import concatenare
 from Logic.crud import create, read, update, delete
+from Logic.ordonare import ordonare_lista
+from Logic.pret_maxim import location_list, pret_maxim_locatie
+from Logic.sume_pret import suma_pret_locatie
+
+
+def list_versions(versions_list, current_version, lista):
+    versions_list.append(lista)
+    current_version +=1
+    return versions_list, current_version
+
+
+def handle_undo(versions_list, current_version):
+    if current_version > 1:
+        current_version -=1
+        del versions_list[current_version]
+        return versions_list, current_version
+    else:
+        print('Ati ajuns la ultima versiune!')
+    return versions_list, current_version
 
 
 def crudmenu():
@@ -21,6 +40,7 @@ def handle_add(lista):
         pret_achizitie = int(input('Dati pretul achizitiei obiectului de adaugat in sir: '))
         locatie = input('Dati locatia (formata din 4 caractere) obiectului de adaugat in sir: ')
         obiect = get_new_object(id, nume, descriere, pret_achizitie, locatie)
+        print('Obiect adaugat cu succes!')
         return create(lista, obiect)
     except ValueError as ve:
         print('Eroare: ', ve)
@@ -48,6 +68,7 @@ def handle_update(lista):
         locatie = input(f'Dati locatia (formata din 4 caractere) obiectului: ')
         update_obiect = get_new_object(id, nume, descriere, pret_achizitie, locatie)
         update_list = update(lista, update_obiect)
+        print('Obiect modificat cu succes!')
         return update_list
     except ValueError as ve:
         print('Eroare: ', ve)
@@ -58,6 +79,7 @@ def handle_delete(lista):
     try:
         delete_id = int(input('Dati id-ul obiectului pe care doriti sa il stergeti: '))
         new_list = delete(lista, delete_id)
+        print('Obiect sters cu succes!')
         return new_list
     except ValueError as ve:
         print('Eroare:', ve)
@@ -68,8 +90,13 @@ def handle_delete(lista):
 
 def showmenu():
     print('1.Crud')
-    print('2.Mutarea unor obiecte dintr-o locatie in alta')
+    print('2.Mutarea unor obiecte dintr-o locatie in alta.')
     print('3.Concatenarea unui string citit la toate descrierile obiectelor cu prețul mai mare decât o valoare citită.')
+    print('4.Determinarea celui mai mare pret pentru fiecare locatie.')
+    print('5.Ordonarea obiectelor crescător după prețul de achiziție.')
+    print('6.Afișarea sumelor prețurilor pentru fiecare locație.')
+    print('7.Undo.')
+    print('a.Afisarea listei.')
     print('x.Iesire')
 
 
@@ -93,37 +120,91 @@ def handle_concatenare(lista):
     return lista
 
 
-def header_crud(lista):
+def handle_pret_max_locatii(lista):
+    try:
+        lista_locatii = location_list(lista)
+        pret_max_list = pret_maxim_locatie(lista)
+        for pozitie in range(len(lista_locatii)):
+            print(f'Cel mai mare pret din locatia {lista_locatii[pozitie]} este {pret_max_list[pozitie]}')
+    except ValueError as ve:
+        print('Eroare: ', 'Dati o lista corecta!')
+    return lista
+
+
+def handle_ordonare(lista):
+    try:
+        return ordonare_lista(lista)
+    except ValueError as ve:
+        print('Eroare: ', 'Dati o lista corecta')
+    return lista
+
+
+def handle_sume_preturi(lista):
+    try:
+        lista_locatii = location_list(lista)
+        for locatie in lista_locatii:
+            print(f'Suma preturilor din locatia {locatie} este {suma_pret_locatie(lista, locatie)}.')
+    except ValueError as ve:
+        print('Eroare: ', ve)
+    return lista
+
+
+def header_crud(lista, versions_list, current_version):
     while True:
         crudmenu()
         obtiune = input('Dati obtiunea: ')
         if obtiune == '1':
             lista = handle_add(lista)
+            versions_list, current_version = list_versions(versions_list, current_version, lista)
         elif obtiune == '2':
             print(handle_read(lista))
         elif obtiune == '3':
             lista = handle_update(lista)
+            versions_list, current_version = list_versions(versions_list, current_version, lista)
         elif obtiune == '4':
             lista = handle_delete(lista)
+            versions_list, current_version = list_versions(versions_list, current_version, lista)
         elif obtiune == 'a':
             print(lista)
         elif obtiune == 'x':
             break
         else:
             print ('Obtiune invalida. Incercati altceva!')
-    return lista
+    return lista, versions_list, current_version
 
 
 def header(lista):
+    versions_list = [lista]
+    current_version = 1
     while True:
         showmenu()
         obtiune = input('Alegeti obtiunea: ')
         if obtiune == '1':
-            header_crud(lista)
+            lista, versions_list, current_version = header_crud(lista, versions_list, current_version)
         elif obtiune == '2':
             lista = handle_change_location(lista)
+            print('Locatiile au fost schimbate cu succes!')
+            versions_list, current_version = list_versions(versions_list, current_version, lista)
         elif obtiune == '3':
             lista = handle_concatenare(lista)
+            print('Lista a fost modificata cu succes!')
+            versions_list, current_version = list_versions(versions_list, current_version, lista)
+        elif obtiune == '4':
+            handle_pret_max_locatii(lista)
+            print('Cerinta a fost indeplinita cu succes!')
+        elif obtiune == '5':
+            lista = handle_ordonare(lista)
+            print('Lista a fost ordonata cu succes!')
+            versions_list, current_version = list_versions(versions_list, current_version, lista)
+        elif obtiune == '6':
+            handle_sume_preturi(lista)
+            print('Cerinta a fost indeplinita cu succes!')
+        elif obtiune == '7':
+            versions_list, current_version = handle_undo(versions_list, current_version)
+            lista = versions_list[current_version-1]
+            print('Undo efectuat cu succes!')
+        elif obtiune == 'a':
+            print(lista)
         elif obtiune == 'x':
             break
         else:
