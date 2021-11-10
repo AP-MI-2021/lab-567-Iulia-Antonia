@@ -11,7 +11,7 @@ def concatenare_string(element1: str, element2: str):
     return element1 + element2
 
 
-def concatenare(lista: list, string_citit: str, pret: int):
+def concatenare(lista, string_citit, pret):
     """
     Concateneaza un string citit la descrierea obiectelor din lista care au un pret mai mare decat unul dat
     :param lista: lista de obiecte
@@ -26,12 +26,11 @@ def concatenare(lista: list, string_citit: str, pret: int):
         if get_pret_achizitie(element) <= pret:
             rezultat.append(element)
         else:
-            id = get_id(element)
+            id1 = get_id(element)
             nume = get_nume(element)
             descriere = concatenare_string(get_descriere(element), string_citit)
             pret_achizitie = get_pret_achizitie(element)
             locatie = get_locatie(element)
-            obiect = get_new_object(id, nume, descriere, pret_achizitie, locatie)
+            obiect = get_new_object(id1, nume, descriere, pret_achizitie, locatie)
             rezultat.append(obiect)
     return rezultat
-

@@ -1,4 +1,4 @@
-from Domain.obiect2 import  get_new_object
+from Domain.obiect2 import get_new_object
 from Logic.change_location import change_location
 from Logic.concatenare import concatenare
 from Logic.crud import create, read, update, delete
@@ -8,19 +8,28 @@ from Logic.sume_pret import suma_pret_locatie
 
 
 def list_versions(versions_list, current_version, lista):
+    while len(versions_list) > current_version:
+        del versions_list[len(versions_list) - 1]
     versions_list.append(lista)
-    current_version +=1
+    current_version += 1
     return versions_list, current_version
 
 
-def handle_undo(versions_list, current_version):
+def handle_undo(current_version):
     if current_version > 1:
-        current_version -=1
-        del versions_list[current_version]
-        return versions_list, current_version
+        current_version -= 1
+        return current_version
+    else:
+        print('Ati ajuns la prima versiune!')
+    return current_version
+
+
+def handle_redo(versions_list, current_version):
+    if current_version != len(versions_list):
+        return current_version + 1
     else:
         print('Ati ajuns la ultima versiune!')
-    return versions_list, current_version
+    return current_version
 
 
 def crudmenu():
@@ -34,12 +43,12 @@ def crudmenu():
 
 def handle_add(lista):
     try:
-        id = int(input('Dati id-ul obiectului de adaugat in sir: '))
+        id1 = int(input('Dati id-ul obiectului de adaugat in sir: '))
         nume = input('Dati numele obiectului de adaugat in sir: ')
         descriere = input('Dati descrierea obiectului de adaugat in sir: ')
         pret_achizitie = int(input('Dati pretul achizitiei obiectului de adaugat in sir: '))
         locatie = input('Dati locatia (formata din 4 caractere) obiectului de adaugat in sir: ')
-        obiect = get_new_object(id, nume, descriere, pret_achizitie, locatie)
+        obiect = get_new_object(id1, nume, descriere, pret_achizitie, locatie)
         print('Obiect adaugat cu succes!')
         return create(lista, obiect)
     except ValueError as ve:
@@ -61,12 +70,12 @@ def handle_read(lista):
 
 def handle_update(lista):
     try:
-        id = int(input(f'Dati id-ul obiectului pe care doriti sa il modificati: '))
+        id1 = int(input(f'Dati id-ul obiectului pe care doriti sa il modificati: '))
         nume = input(f'Dati numele obiectului: ')
         descriere = input(f'Dati descrierea obiectului: ')
         pret_achizitie = int(input(f'Dati pretul achizitiei obiectului: '))
         locatie = input(f'Dati locatia (formata din 4 caractere) obiectului: ')
-        update_obiect = get_new_object(id, nume, descriere, pret_achizitie, locatie)
+        update_obiect = get_new_object(id1, nume, descriere, pret_achizitie, locatie)
         update_list = update(lista, update_obiect)
         print('Obiect modificat cu succes!')
         return update_list
@@ -96,6 +105,7 @@ def showmenu():
     print('5.Ordonarea obiectelor crescător după prețul de achiziție.')
     print('6.Afișarea sumelor prețurilor pentru fiecare locație.')
     print('7.Undo.')
+    print('8.Redo.')
     print('a.Afisarea listei.')
     print('x.Iesire')
 
@@ -126,7 +136,7 @@ def handle_pret_max_locatii(lista):
         pret_max_list = pret_maxim_locatie(lista)
         for pozitie in range(len(lista_locatii)):
             print(f'Cel mai mare pret din locatia {lista_locatii[pozitie]} este {pret_max_list[pozitie]}')
-    except ValueError as ve:
+    except ValueError:
         print('Eroare: ', 'Dati o lista corecta!')
     return lista
 
@@ -134,7 +144,7 @@ def handle_pret_max_locatii(lista):
 def handle_ordonare(lista):
     try:
         return ordonare_lista(lista)
-    except ValueError as ve:
+    except ValueError:
         print('Eroare: ', 'Dati o lista corecta')
     return lista
 
@@ -169,7 +179,7 @@ def header_crud(lista, versions_list, current_version):
         elif obtiune == 'x':
             break
         else:
-            print ('Obtiune invalida. Incercati altceva!')
+            print('Obtiune invalida. Incercati altceva!')
     return lista, versions_list, current_version
 
 
@@ -200,9 +210,13 @@ def header(lista):
             handle_sume_preturi(lista)
             print('Cerinta a fost indeplinita cu succes!')
         elif obtiune == '7':
-            versions_list, current_version = handle_undo(versions_list, current_version)
-            lista = versions_list[current_version-1]
+            current_version = handle_undo(current_version)
+            lista = versions_list[current_version - 1]
             print('Undo efectuat cu succes!')
+        elif obtiune == '8':
+            current_version = handle_redo(versions_list, current_version)
+            lista = versions_list[current_version - 1]
+            print('Redo efectuat cu succes!')
         elif obtiune == 'a':
             print(lista)
         elif obtiune == 'x':

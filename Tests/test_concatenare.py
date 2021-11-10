@@ -19,4 +19,3 @@ def test_concatenare():
         assert False
     except ValueError:
         assert True
-

@@ -16,10 +16,10 @@ def change_location(lista: list, sursa: str, destinatie: str):
         if get_locatie(element) != sursa:
             rezultat.append(element)
         else:
-            id = get_id(element)
+            id1 = get_id(element)
             nume = get_nume(element)
             descriere = get_descriere(element)
             pret_achizitie = get_pret_achizitie(element)
-            obiect = get_new_object(id, nume, descriere, pret_achizitie, destinatie)
+            obiect = get_new_object(id1, nume, descriere, pret_achizitie, destinatie)
             rezultat.append(obiect)
     return rezultat

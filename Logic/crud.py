@@ -63,7 +63,7 @@ def update(lista_obiecte, new_object):
     return rezultat
 
 
-def delete(lista_obiecte, id_obiect: int):
+def delete(lista_obiecte, id_obiect):
     """
     Sterge obiectul cu un id dat din lista
     :param lista_obiecte: lista de obiecte

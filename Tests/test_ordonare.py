@@ -1,4 +1,4 @@
-from Domain.obiect2 import get_new_object, get_pret_achizitie
+from Domain.obiect2 import get_new_object
 from Logic.ordonare import ordonare_lista
 
 
@@ -22,5 +22,3 @@ def test_ordonare():
 
 
 test_ordonare()
-
-
