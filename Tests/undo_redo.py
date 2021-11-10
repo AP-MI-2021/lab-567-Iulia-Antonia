@@ -14,7 +14,7 @@ def get_data():
     ]
 
 
-def test_undo():
+def test_undo_redo():
     lista = []
     versions_list = []
     current_version = 0
@@ -113,4 +113,4 @@ def test_undo():
     assert versions_list[current_version - 1] == lista
 
 
-test_undo()
+test_undo_redo()

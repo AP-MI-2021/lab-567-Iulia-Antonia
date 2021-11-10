@@ -5,6 +5,7 @@ from Tests.test_pret_maxim import test_pret_max_per_location
 from Tests.test_crud import test_crud
 from Tests.test_change_location import test_change_location
 from Tests.test_ordonare import test_ordonare
+from Tests.undo_redo import test_undo_redo
 from Tests.test_sume_pret import test_sume_pret
 from User_interface.console import header
 from User_interface.console2 import header2
@@ -45,6 +46,7 @@ if __name__ == '__main__':
     test_ordonare()
     test_pret_max_per_location()
     test_sume_pret()
+    test_undo_redo()
     obtiuni()
     obtiune = input('Alege cum vrei sa dai comenzile: ')
 
