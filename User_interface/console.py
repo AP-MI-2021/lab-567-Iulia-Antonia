@@ -5,19 +5,12 @@ from Logic.crud import create, read, update, delete
 from Logic.ordonare import ordonare_lista
 from Logic.pret_maxim import location_list, pret_maxim_locatie
 from Logic.sume_pret import suma_pret_locatie
-
-
-def list_versions(versions_list, current_version, lista):
-    while len(versions_list) > current_version:
-        del versions_list[len(versions_list) - 1]
-    versions_list.append(lista)
-    current_version += 1
-    return versions_list, current_version
+from Logic.undo_redo import list_versions, undo, redo
 
 
 def handle_undo(current_version):
+    current_version = undo(current_version)
     if current_version > 1:
-        current_version -= 1
         return current_version
     else:
         print('Ati ajuns la prima versiune!')
@@ -25,8 +18,9 @@ def handle_undo(current_version):
 
 
 def handle_redo(versions_list, current_version):
+    current_version = redo(versions_list, current_version)
     if current_version != len(versions_list):
-        return current_version + 1
+        return current_version
     else:
         print('Ati ajuns la ultima versiune!')
     return current_version
